@@ -91,3 +91,28 @@ src/main/res/
 ## 5.  总结 (Conclusion)
 
 本项目通过对原生 NotePad 的重构与扩展，成功实现了一个功能更加丰富、适应性更强的笔记应用。在开发过程中，深入实践了 Android 的 **ContentProvider 机制**、**Loader 异步加载**、**UI 事件处理**以及**数据库版本管理**等核心技术点。
+![屏幕截图2025-12-03 164333](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164347](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164353](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164405](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164437](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164443](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164453](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164503](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164509](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 171147](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 172134](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 172433](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 172440](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
