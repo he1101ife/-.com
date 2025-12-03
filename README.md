@@ -29,9 +29,7 @@
 *   **功能描述**：为满足不同场景下的阅读需求（如夜间或护眼模式），提供了背景颜色切换功能。
 *   **交互体验**：点击菜单栏的切换背景按钮，应用背景将在**标准白色**和**护眼绿色**之间一键切换。
 
-#### D.  文件夹分类管理 (Folder Management)
-*   **功能描述**：引入了文件夹概念，允许用户创建不同类别的文件夹（如工作、生活），并将笔记归类存放。
-*   **用户价值**：解决了大量笔记堆积在主列表难以管理的问题，提供了层级化的信息组织方式。
+#### D.  代办事项管理 (Folder Management)
 
 ---
 
@@ -48,6 +46,27 @@
 *   **时间戳格式化**：
     *   **关键代码**：实现了 `SimpleCursorAdapter.ViewBinder` 接口。
     *   **逻辑**：拦截数据库中的 `COLUMN_NAME_MODIFICATION_DATE`（Long型毫秒数），使用 `SimpleDateFormat` 或 `DateFormat` 将其转换为易读的日期字符串（如 `2023-10-01 12:00`）显示在 `TextView` 上。
+
+ 核心逻辑：在 NotesList.java 中使用 ViewBinder 拦截数据绑定过程，将数据库中的毫秒时间戳转换为可读的日期格式。
+// 文件: NotesList.java
+mAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+    @Override
+    public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+        // 判断是否是时间戳列
+        if (columnIndex == COLUMN_INDEX_TIMESTAMP) {
+            long timestamp = cursor.getLong(columnIndex);
+            // 格式化时间：日期 + 时间
+            String dateStr = DateFormat.getMediumDateFormat(NotesList.this)
+                    .format(new Date(timestamp)) + " "
+                    + DateFormat.getTimeFormat(NotesList.this)
+                    .format(new Date(timestamp));
+            ((TextView) view).setText(dateStr);
+            return true; // 拦截默认处理
+        }
+        return false;
+    }
+});
+
     *   
 ![屏幕截图2025-12-03 164333](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
 
@@ -62,6 +81,43 @@
     *   利用 `CursorLoader` 机制，动态构建 SQL 查询语句。
     *   **核心 SQL**：`selection = "title LIKE ? OR note LIKE ?"`，实现了对标题和内容的双重检索。
 
+核心逻辑：在 NotesList.java 中配置 SearchView，并实现 OnQueryTextListener 接口，通过动态修改 CursorLoader 的查询条件实现实时过滤。
+
+// 文件: NotesList.java
+
+// 1. 配置 SearchView
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    // ...
+    MenuItem searchItem = menu.findItem(R.id.menu_search);
+    SearchView searchView = (SearchView) searchItem.getActionView();
+    searchView.setOnQueryTextListener(this); // 设置监听器
+    // ...
+}
+
+// 2. 实时查询逻辑
+@Override
+public boolean onQueryTextChange(String newText) {
+    mSearchQuery = newText;
+    // 重启 Loader，触发 onCreateLoader 重新查询
+    getLoaderManager().restartLoader(0, null, this);
+    return true;
+}
+
+// 3. 构建 SQL 查询
+@Override
+public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    String selection = null;
+    String[] selectionArgs = null;
+    if (mSearchQuery != null && !mSearchQuery.isEmpty()) {
+        // 模糊匹配标题或内容
+        selection = NotePad.Notes.COLUMN_NAME_TITLE + " LIKE ? OR "
+                  + NotePad.Notes.COLUMN_NAME_NOTE + " LIKE ?";
+        selectionArgs = new String[]{"%" + mSearchQuery + "%", "%" + mSearchQuery + "%"};
+    }
+    return new CursorLoader(this, baseUri, PROJECTION, selection, selectionArgs, ...);
+}
+
 ![屏幕截图2025-12-03 164405](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164405.png?raw=true)
 
 ### 3.4 动态 UI 渲染 (Dynamic UI)
@@ -69,11 +125,66 @@
     *   在 `NotesList` Activity 中维护背景状态变量。
     *   通过 `getListView().setBackgroundColor()` 方法实时修改视图属性，无需重启 Activity 即可生效。
 
+核心逻辑：在 NotesList.java 中维护一个状态变量，点击菜单项时直接修改 ListView 的背景颜色。
+
+// 文件: NotesList.java
+private boolean isGreen = false; // 状态标记
+
+// 菜单点击处理
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+        case R.id.menu_color_toggle:
+            changeBackgroundColor();
+            return true;
+        // ...
+    }
+}
+
+// 切换背景方法
+private void changeBackgroundColor() {
+    View view = getListView();
+    if (view != null) {
+        if (isGreen) {
+            view.setBackgroundColor(android.graphics.Color.WHITE); // 切换回白色
+        } else {
+            view.setBackgroundColor(android.graphics.Color.GREEN); // 切换为绿色
+        }
+        isGreen = !isGreen; // 反转状态
+    }
+}
+
 ![屏幕截图2025-12-03 172134](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20172134.png?raw=true)
 
 ![屏幕截图2025-12-03 172433](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20172433.png?raw=true)
 
 ### 3.5 代办事项创建 (Dynamic UI)
+
+核心逻辑：这是一个独立的模块，包含 TodoList Activity 和 TodoProvider。核心在于 TodoList.java 中对不同状态（待办/完成）和优先级（高/中/低）的 UI 渲染。
+
+// 文件: TodoList.java
+mAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+    @Override
+    public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+        // 渲染状态颜色
+        if (view.getId() == R.id.todo_status) {
+            int status = cursor.getInt(COLUMN_INDEX_STATUS);
+            switch (status) {
+                case TodoContract.TodoItems.STATUS_TODO:
+                    ((TextView) view).setText("待办");
+                    ((TextView) view).setTextColor(0xFFF44336); // 红色
+                    break;
+                case TodoContract.TodoItems.STATUS_DONE:
+                    ((TextView) view).setText("已完成");
+                    ((TextView) view).setTextColor(0xFF4CAF50); // 绿色
+                    break;
+                // ...
+            }
+            return true;
+        }
+        return false;
+    }
+});
 
 ![屏幕截图2025-12-03 164437](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164437.png?raw=true)
 
@@ -116,3 +227,4 @@ src/main/res/
 ## 5.  总结 (Conclusion)
 
 本项目通过对原生 NotePad 的重构与扩展，成功实现了一个功能更加丰富、适应性更强的笔记应用。在开发过程中，深入实践了 Android 的 **ContentProvider 机制**、**Loader 异步加载**、**UI 事件处理**以及**数据库版本管理**等核心技术点。
+
