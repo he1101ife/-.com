@@ -48,6 +48,12 @@
 *   **时间戳格式化**：
     *   **关键代码**：实现了 `SimpleCursorAdapter.ViewBinder` 接口。
     *   **逻辑**：拦截数据库中的 `COLUMN_NAME_MODIFICATION_DATE`（Long型毫秒数），使用 `SimpleDateFormat` 或 `DateFormat` 将其转换为易读的日期字符串（如 `2023-10-01 12:00`）显示在 `TextView` 上。
+    *   
+![屏幕截图2025-12-03 164333](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
+
+![屏幕截图2025-12-03 164347](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164347.png?raw=true)
+
+![屏幕截图2025-12-03 164353](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164353.png?raw=true)
 
 ### 3.3 搜索功能实现 (Search Logic)
 *   **组件集成**：在 `notes_list_menu.xml` 中配置 `SearchView` 控件。
@@ -56,10 +62,29 @@
     *   利用 `CursorLoader` 机制，动态构建 SQL 查询语句。
     *   **核心 SQL**：`selection = "title LIKE ? OR note LIKE ?"`，实现了对标题和内容的双重检索。
 
+![屏幕截图2025-12-03 164405](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164405.png?raw=true)
+
 ### 3.4 动态 UI 渲染 (Dynamic UI)
 *   **背景切换**：
     *   在 `NotesList` Activity 中维护背景状态变量。
     *   通过 `getListView().setBackgroundColor()` 方法实时修改视图属性，无需重启 Activity 即可生效。
+
+![屏幕截图2025-12-03 172134](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20172134.png?raw=true)
+
+![屏幕截图2025-12-03 172433](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20172433.png?raw=true)
+
+### 3.5 代办事项创建 (Dynamic UI)
+
+![屏幕截图2025-12-03 164437](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164437.png?raw=true)
+
+![屏幕截图2025-12-03 164443](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164443.png?raw=true)
+
+![屏幕截图2025-12-03 164453](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164453.png?raw=true)
+
+![屏幕截图2025-12-03 164503](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164503.png?raw=true)
+
+![屏幕截图2025-12-03 164509](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164509.png?raw=true)
+
 
 ---
 
@@ -91,7 +116,3 @@ src/main/res/
 ## 5.  总结 (Conclusion)
 
 本项目通过对原生 NotePad 的重构与扩展，成功实现了一个功能更加丰富、适应性更强的笔记应用。在开发过程中，深入实践了 Android 的 **ContentProvider 机制**、**Loader 异步加载**、**UI 事件处理**以及**数据库版本管理**等核心技术点。
-![屏幕截图2025-12-03 164333](https://github.com/he1101ife/-.com/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-12-03%20164333.png?raw=true)
-
-
-
