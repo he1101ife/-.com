@@ -1,0 +1,21 @@
+pluginManagement {
+    // 文档要求：插件仓库配置在这里（用于下载 Android Gradle 插件 7.4.2）
+    repositories {
+        gradlePluginPortal() // 插件官方仓库（优先，7.4.2 版本在这里）
+        google() // Android 插件备用仓库
+        mavenCentral() // 中央仓库备用
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS) // 强制用这里的仓库，无冲突
+    // 文档要求：项目依赖仓库配置在这里（用于下载 appcompat、junit 等）
+    repositories {
+        google() // Android 官方依赖仓库（文档推荐的公共仓库）
+        mavenCentral() // 中央仓库（文档推荐的公共仓库）
+        maven { url "https://jitpack.io" } // 按需保留（GitHub 第三方库，文档支持自定义仓库）
+    }
+}
+
+rootProject.name = "NotePad"
+include ':app'
